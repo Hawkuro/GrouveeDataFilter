@@ -61,7 +61,7 @@ namespace GrouveeDataFilter.Models
         [FieldQuoted] //NameUrl
         public string[] publishers;
         public DateTime release_date;
-        public Uri url;
+        public string url; //Uri
         public int giantbomb_id;
 
     }
