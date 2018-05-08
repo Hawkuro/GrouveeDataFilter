@@ -14,7 +14,7 @@ namespace GrouveeDataFilter
         {
             //var grouveeDataFileName = args[0];
             var engine = new FileHelperEngine<GrouveeGame>(Encoding.UTF8);
-            engine.ReadFile("C:\\Users\\haukuroskar\\Downloads\\Hawkuro_26904_grouvee_export.csv");
+            var result = engine.ReadFile("C:\\Users\\haukuroskar\\Downloads\\Hawkuro_26904_grouvee_export.csv");
         }
     }
 }
