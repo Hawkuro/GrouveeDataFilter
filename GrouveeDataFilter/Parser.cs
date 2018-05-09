@@ -6,6 +6,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GrouveeDataFilter.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace GrouveeDataFilter
 {
@@ -24,8 +26,12 @@ namespace GrouveeDataFilter
             tail = gameString;
             var game = new GrouveeGame();
 
-            game.id = Int32.Parse(NextElement());
+            game.id = int.Parse(NextElement());
             game.name = NextElement();
+            game.shelves = NameUrlParser(NextElement());
+            game.platforms = NameUrlParser(NextElement());
+            game.rating = NullableIntParser(NextElement());
+            game.review = NextElement();
 
             return game;
         }
@@ -71,6 +77,30 @@ namespace GrouveeDataFilter
             tail = tail.Substring(nextComma + 1);
 
             return nextElement;
+        }
+
+        private IEnumerable<GrouveeGame.NameUrl> NameUrlParser(string nameUrlString)
+        {
+            var NameUrls = new List<GrouveeGame.NameUrl>();
+            if (string.IsNullOrEmpty(nameUrlString)) return NameUrls;
+
+            var json = JObject.Parse(nameUrlString);
+            foreach (var property in json.Properties().Select(p=>p.Name))
+            {
+                var NameUrl = new GrouveeGame.NameUrl();
+                NameUrl.name = property;
+                NameUrl.url = new Uri(((JObject) json.Property(property).Value).Property("url").Value.ToString());
+
+                NameUrls.Add(NameUrl);
+            }
+
+            return NameUrls;
+        }
+
+        private int? NullableIntParser(string intString)
+        {
+            if (string.IsNullOrEmpty(intString)) return null;
+            return int.Parse(intString);
         }
     }
 }

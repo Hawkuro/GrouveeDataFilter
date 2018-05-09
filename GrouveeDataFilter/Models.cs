@@ -47,16 +47,16 @@ namespace GrouveeDataFilter.Models
 
         public int id;
         public string name;
-        public NameUrl shelves;
-        public NameUrl platforms;
+        public IEnumerable<NameUrl> shelves;
+        public IEnumerable<NameUrl>  platforms;
         public int? rating;
         public string review;
-        public DateData[] dates;
-        public Status[] statuses;
-        public NameUrl[] genres;
-        public NameUrl[] franchises;
-        public NameUrl[] developers;
-        public NameUrl[] publishers;
+        public IEnumerable<DateData>  dates;
+        public IEnumerable<Status>  statuses;
+        public IEnumerable<NameUrl>  genres;
+        public IEnumerable<NameUrl>  franchises;
+        public IEnumerable<NameUrl>  developers;
+        public IEnumerable<NameUrl>  publishers;
         public DateTime release_date;
         public Uri url; 
         public int giantbomb_id;
