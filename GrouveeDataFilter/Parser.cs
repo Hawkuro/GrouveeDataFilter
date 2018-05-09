@@ -72,10 +72,5 @@ namespace GrouveeDataFilter
 
             return nextElement;
         }
-
-        private string GetString(string input)
-        {
-            return input;
-        }
     }
 }
