@@ -55,8 +55,8 @@ namespace GrouveeDataFilter.Models
         public IEnumerable<NameUrl>  franchises;
         public IEnumerable<NameUrl>  developers;
         public IEnumerable<NameUrl>  publishers;
-        public DateTime release_date;
+        public DateTime? release_date;
         public Uri url; 
-        public int giantbomb_id;
+        public int? giantbomb_id;
     }
 }

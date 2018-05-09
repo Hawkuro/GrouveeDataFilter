@@ -35,6 +35,13 @@ namespace GrouveeDataFilter
             game.review = NextElement();
             game.dates = DateDataParser(NextElement());
             game.statuses = StatusParser(NextElement());
+            game.genres = NameUrlParser(NextElement());
+            game.franchises = NameUrlParser(NextElement());
+            game.developers = NameUrlParser(NextElement());
+            game.publishers = NameUrlParser(NextElement());
+            game.release_date = NullableDateTimeParser(NextElement());
+            game.url = new Uri(NextElement());
+            game.giantbomb_id = NullableIntParser(NextElement());
 
             return game;
         }
@@ -73,6 +80,13 @@ namespace GrouveeDataFilter
             } else
             {
                 nextComma = tail.IndexOf(',');
+                if (nextComma == -1) // end of line
+                {
+                    nextElement = tail;
+                    tail = "";
+                    return nextElement;
+                }
+
                 nextElement = tail.Substring(0, nextComma);
             }
 
