@@ -10,11 +10,6 @@ namespace GrouveeDataFilter
 {
     public class Program
     {
-        public static void Run<S>(GrouveeGame[] games, Func<GrouveeGame,bool> filter,
-            IComparer<GrouveeGame> comparer, Func<GrouveeGame, S> selector, Action<IEnumerable<S>> outputter)
-        {
-            outputter(games.Where(filter).OrderBy(g => g, comparer).Select(selector));
-        }
 
         public static void Main(string[] args)
         {
@@ -22,10 +17,15 @@ namespace GrouveeDataFilter
             //var grouveeDataFileName = args[0];
             var grouveeDataFileName = "C:\\Users\\haukuroskar\\Downloads\\Hawkuro_26904_grouvee_export.csv";
 
-            // TODO: Parse the data
-
             // TODO: Write filter, comparer, selector, outputter
-            Run(new GrouveeGame[] { }, g => true, Comparer<GrouveeGame>.Default, g => g, gs => Console.WriteLine(gs));
+            var gdf = new GrouveeDataFilter<string>(
+                g => true,
+                (g1,g2)=>g1.name.CompareTo(g2.name),
+                g => g.name,
+                gs => gs.Select((g,i) => i+" "+g).ForEach(g => Console.WriteLine(g))
+                );
+
+            gdf.Run(grouveeDataFileName);
 
         }
     }

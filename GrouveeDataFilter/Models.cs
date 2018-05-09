@@ -8,7 +8,6 @@ using FileHelpers;
 
 namespace GrouveeDataFilter.Models
 {
-    [DelimitedRecord(","), IgnoreFirst]
     public class GrouveeGame
     {
         public class Status
@@ -61,7 +60,5 @@ namespace GrouveeDataFilter.Models
         public DateTime release_date;
         public Uri url; 
         public int giantbomb_id;
-
     }
-
 }
