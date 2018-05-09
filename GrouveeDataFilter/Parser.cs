@@ -115,7 +115,7 @@ namespace GrouveeDataFilter
             return DateTime.TryParse(dateTimeString, out ret) ? ret : (DateTime?) null;
         }
 
-        private GrouveeGame.LevelOfCompletion? NullableLevelOfCompletionParser(string locString)
+        private GrouveeGame.LevelOfCompletion LevelOfCompletionParser(string locString)
         {
             var dict = new Dictionary<string, GrouveeGame.LevelOfCompletion>
             {
@@ -124,7 +124,7 @@ namespace GrouveeDataFilter
                 {"100% Completion", GrouveeGame.LevelOfCompletion.HundredPercent }
             };
             GrouveeGame.LevelOfCompletion ret;
-            return dict.TryGetValue(locString, out ret) ? ret : (GrouveeGame.LevelOfCompletion?) null;
+            return dict.TryGetValue(locString, out ret) ? ret : GrouveeGame.LevelOfCompletion.None;
         }
 
         private IEnumerable<GrouveeGame.DateData> DateDataParser(string dateDataString)
@@ -141,7 +141,7 @@ namespace GrouveeDataFilter
                     date_started = NullableDateTimeParser(t.Property("date_started").Value.ToString()),
                     date_finished = NullableDateTimeParser(t.Property("date_finished").Value.ToString()),
                     level_of_completion =
-                        NullableLevelOfCompletionParser(t.Property("level_of_completion").Value.ToString()),
+                        LevelOfCompletionParser(t.Property("level_of_completion").Value.ToString()),
                     seconds_played = NullableIntParser(t.Property("seconds_played").Value.ToString())
                 };
 

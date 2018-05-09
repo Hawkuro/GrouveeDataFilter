@@ -19,6 +19,7 @@ namespace GrouveeDataFilter.Models
 
         public enum LevelOfCompletion
         {
+            None,
             MainStory,
             MainStoryExtras,
             HundredPercent
@@ -28,7 +29,7 @@ namespace GrouveeDataFilter.Models
         {
             public DateTime? date_finished;
             public DateTime? date_started;
-            public LevelOfCompletion? level_of_completion;
+            public LevelOfCompletion level_of_completion;
             public int? seconds_played;
         }
         public class NameUrl
