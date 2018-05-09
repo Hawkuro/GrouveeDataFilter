@@ -34,6 +34,7 @@ namespace GrouveeDataFilter
             game.rating = NullableIntParser(NextElement());
             game.review = NextElement();
             game.dates = DateDataParser(NextElement());
+            game.statuses = StatusParser(NextElement());
 
             return game;
         }
@@ -149,6 +150,30 @@ namespace GrouveeDataFilter
             }
 
             return dateDatas;
+        }
+
+        private IEnumerable<GrouveeGame.Status> StatusParser(string statusString)
+        {
+            var statuses = new List<GrouveeGame.Status>();
+            if (string.IsNullOrEmpty(statusString)) return statuses;
+
+            var json = JArray.Parse(statusString);
+
+            foreach (var token in json)
+            {
+                var t = (JObject) token;
+
+                var status = new GrouveeGame.Status
+                {
+                    status = t.Property("status").Value.ToString(),
+                    date = DateTime.Parse(t.Property("date").Value.ToString()),
+                    url = new Uri(t.Property("url").Value.ToString())
+                };
+
+                statuses.Add(status);
+            }
+
+            return statuses;
         }
     }
 }
