@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -32,6 +33,7 @@ namespace GrouveeDataFilter
             game.platforms = NameUrlParser(NextElement());
             game.rating = NullableIntParser(NextElement());
             game.review = NextElement();
+            game.dates = DateDataParser(NextElement());
 
             return game;
         }
@@ -87,9 +89,11 @@ namespace GrouveeDataFilter
             var json = JObject.Parse(nameUrlString);
             foreach (var property in json.Properties().Select(p=>p.Name))
             {
-                var NameUrl = new GrouveeGame.NameUrl();
-                NameUrl.name = property;
-                NameUrl.url = new Uri(((JObject) json.Property(property).Value).Property("url").Value.ToString());
+                var NameUrl = new GrouveeGame.NameUrl
+                {
+                    name = property,
+                    url = new Uri(((JObject) json.Property(property).Value).Property("url").Value.ToString())
+                };
 
                 NameUrls.Add(NameUrl);
             }
@@ -101,6 +105,50 @@ namespace GrouveeDataFilter
         {
             if (string.IsNullOrEmpty(intString)) return null;
             return int.Parse(intString);
+        }
+
+        private DateTime? NullableDateTimeParser(string dateTimeString)
+        {
+            if (string.IsNullOrEmpty(dateTimeString)) return null;
+
+            DateTime ret;
+            return DateTime.TryParse(dateTimeString, out ret) ? ret : (DateTime?) null;
+        }
+
+        private GrouveeGame.LevelOfCompletion? NullableLevelOfCompletionParser(string locString)
+        {
+            var dict = new Dictionary<string, GrouveeGame.LevelOfCompletion>
+            {
+                {"Main Story", GrouveeGame.LevelOfCompletion.MainStory},
+                {"Main Story + Extras", GrouveeGame.LevelOfCompletion.MainStoryExtras },
+                {"100% Completion", GrouveeGame.LevelOfCompletion.HundredPercent }
+            };
+            GrouveeGame.LevelOfCompletion ret;
+            return dict.TryGetValue(locString, out ret) ? ret : (GrouveeGame.LevelOfCompletion?) null;
+        }
+
+        private IEnumerable<GrouveeGame.DateData> DateDataParser(string dateDataString)
+        {
+            var dateDatas = new List<GrouveeGame.DateData>();
+            if (string.IsNullOrEmpty(dateDataString)) return dateDatas;
+
+            var json = JArray.Parse(dateDataString);
+            foreach (var token in json)
+            {
+                var t = (JObject) token;
+                var dateData = new GrouveeGame.DateData
+                {
+                    date_started = NullableDateTimeParser(t.Property("date_started").Value.ToString()),
+                    date_finished = NullableDateTimeParser(t.Property("date_finished").Value.ToString()),
+                    level_of_completion =
+                        NullableLevelOfCompletionParser(t.Property("level_of_completion").Value.ToString()),
+                    seconds_played = NullableIntParser(t.Property("seconds_played").Value.ToString())
+                };
+
+                dateDatas.Add(dateData);
+            }
+
+            return dateDatas;
         }
     }
 }

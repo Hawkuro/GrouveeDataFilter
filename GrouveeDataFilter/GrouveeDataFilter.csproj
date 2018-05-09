@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Filter Templates\FinishedGameFilter.cs" />
     <Compile Include="Filter Templates\IndexNameFilter.cs" />
     <Compile Include="GrouveeDataFilter.cs" />
     <Compile Include="IFilterTemplate.cs" />
