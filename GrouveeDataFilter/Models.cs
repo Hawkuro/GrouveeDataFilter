@@ -11,6 +11,12 @@ namespace GrouveeDataFilter.Models
     [DelimitedRecord(","), IgnoreFirst]
     public class GrouveeGame
     {
+        public class Status
+        {
+            public string status;
+            public DateTime date;
+            public Uri url;
+        }
 
         public enum LevelOfCompletion
         {
@@ -42,26 +48,18 @@ namespace GrouveeDataFilter.Models
 
         public int id;
         public string name;
-        [FieldQuoted] //Shelf
-        public string shelves;
-        [FieldQuoted] //NameUrl
-        public string platforms;
+        public NameUrl shelves;
+        public NameUrl platforms;
         public int? rating;
         public string review;
-        [FieldQuoted] //DateData
-        public string dates;
-        [FieldQuoted]
-        public string[] statuses;
-        [FieldQuoted] //NameUrl
-        public string[] genres;
-        [FieldQuoted] //NameUrl
-        public string[] franchises;
-        [FieldQuoted] //NameUrl
-        public string[] developers;
-        [FieldQuoted] //NameUrl
-        public string[] publishers;
+        public DateData dates;
+        public Status[] statuses;
+        public NameUrl[] genres;
+        public NameUrl[] franchises;
+        public NameUrl[] developers;
+        public NameUrl[] publishers;
         public DateTime release_date;
-        public string url; //Uri
+        public Uri url; 
         public int giantbomb_id;
 
     }

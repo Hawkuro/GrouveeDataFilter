@@ -12,9 +12,11 @@ namespace GrouveeDataFilter
     {
         static void Main(string[] args)
         {
+
             //var grouveeDataFileName = args[0];
-            var engine = new FileHelperEngine<GrouveeGame>(Encoding.UTF8);
-            var result = engine.ReadFile("C:\\Users\\haukuroskar\\Downloads\\Hawkuro_26904_grouvee_export.csv");
+            var grouveeDataFileName = "C:\\Users\\haukuroskar\\Downloads\\Hawkuro_26904_grouvee_export.csv";
+            //var engine = new FileHelperEngine<GrouveeGame>(Encoding.UTF8);
+            //var result = engine.ReadFile("C:\\Users\\haukuroskar\\Downloads\\Hawkuro_26904_grouvee_export.csv");
         }
     }
 }
