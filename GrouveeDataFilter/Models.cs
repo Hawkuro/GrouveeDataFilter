@@ -19,11 +19,8 @@ namespace GrouveeDataFilter.Models
 
         public enum LevelOfCompletion
         {
-            [Description("Main Story")]
             MainStory,
-            [Description("Main Story + Extras")]
             MainStoryExtras,
-            [Description("100% Completion")]
             HundredPercent
         }
 
