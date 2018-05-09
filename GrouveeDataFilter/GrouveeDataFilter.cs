@@ -12,11 +12,13 @@ namespace GrouveeDataFilter
     {
         private Func<GrouveeGame, bool> filter;
         private IComparer<GrouveeGame> comparer;
-        private Func<GrouveeGame, S> selector;
+        private Func<GrouveeGame, int, S> selector;
         private Action<IEnumerable<S>> outputter;
 
+        public GrouveeDataFilter(IFilterTemplate<S> template) : this(template.Filter, template.Comparer, template.Selector, template.Outputter) { }
+
         public GrouveeDataFilter(Func<GrouveeGame, bool> filter,
-            Comparison<GrouveeGame> comparer, Func<GrouveeGame, S> selector, Action<IEnumerable<S>> outputter)
+            Comparison<GrouveeGame> comparer, Func<GrouveeGame, int, S> selector, Action<IEnumerable<S>> outputter)
         {
             this.filter = filter;
             this.comparer = Comparer<GrouveeGame>.Create(comparer);
