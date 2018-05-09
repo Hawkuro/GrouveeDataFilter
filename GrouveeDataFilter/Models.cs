@@ -52,7 +52,7 @@ namespace GrouveeDataFilter.Models
         public NameUrl platforms;
         public int? rating;
         public string review;
-        public DateData dates;
+        public DateData[] dates;
         public Status[] statuses;
         public NameUrl[] genres;
         public NameUrl[] franchises;
