@@ -26,6 +26,7 @@ namespace GrouveeDataFilter
             //    gs => gs.ForEach(g => Console.WriteLine(g))
             //    );
 
+            // (\\""|..[^"])",
             var gdf = new GrouveeDataFilter<string>(new IndexNameFilter());
 
             gdf.Run(grouveeDataFileName);

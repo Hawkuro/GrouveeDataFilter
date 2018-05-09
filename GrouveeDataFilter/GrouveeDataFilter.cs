@@ -36,9 +36,7 @@ namespace GrouveeDataFilter
 
                 while (!fileContent.EndOfStream)
                 {
-                    var newGame = new GrouveeGame {name = fileContent.ReadLine()};
-                    //TODO: actually parse
-                    gameList.Add(newGame);
+                    gameList.Add(new Parser(fileContent.ReadLine()).ParseLine());
                 }
             }
             return gameList;
