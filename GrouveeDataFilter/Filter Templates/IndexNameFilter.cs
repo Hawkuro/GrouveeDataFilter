@@ -7,7 +7,7 @@ using GrouveeDataFilter.Models;
 
 namespace GrouveeDataFilter.Filter_Templates
 {
-    public class IndexNameFilter : IFilterTemplate<string>
+    public class IndexNameFilter : IFilterOutputterTemplate<string>
     {
         public bool Filter(GrouveeGame game)
         {

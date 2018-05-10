@@ -54,7 +54,7 @@
     <Compile Include="Filter Templates\FinishedGameFilter.cs" />
     <Compile Include="Filter Templates\IndexNameFilter.cs" />
     <Compile Include="GrouveeDataFilter.cs" />
-    <Compile Include="IFilterTemplate.cs" />
+    <Compile Include="IFilterOutputterTemplate.cs" />
     <Compile Include="Models.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Program.cs" />

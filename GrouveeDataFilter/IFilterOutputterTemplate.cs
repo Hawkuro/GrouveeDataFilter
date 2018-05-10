@@ -7,14 +7,14 @@ using GrouveeDataFilter.Models;
 
 namespace GrouveeDataFilter
 {
-    public interface IFilterTemplateStub<S>
+    public interface IFilterTemplate<S>
     {
         bool Filter(GrouveeGame game);
         int Comparer(GrouveeGame x, GrouveeGame y);
         S Selector(GrouveeGame game, int index);
     }
 
-    public interface IFilterTemplate<S> : IFilterTemplateStub<S>
+    public interface IFilterOutputterTemplate<S> : IFilterTemplate<S>
     {
         void Outputter(IEnumerable<S> games); // Separated mostly to be able to plug and unplug e.g. stdOut and write to file
     }

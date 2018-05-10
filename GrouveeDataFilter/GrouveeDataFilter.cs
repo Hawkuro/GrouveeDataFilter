@@ -14,7 +14,7 @@ namespace GrouveeDataFilter
         public readonly IComparer<GrouveeGame> comparer;
         public readonly Func<GrouveeGame, int, S> selector;
 
-        public GrouveeDataFilter(IFilterTemplateStub<S> template) : this(template.Filter, template.Comparer, template.Selector) { }
+        public GrouveeDataFilter(IFilterTemplate<S> template) : this(template.Filter, template.Comparer, template.Selector) { }
 
         public GrouveeDataFilter(Func<GrouveeGame, bool> filter,
             Comparison<GrouveeGame> comparer, Func<GrouveeGame, int, S> selector)
@@ -68,7 +68,7 @@ namespace GrouveeDataFilter
             this.outputter = outputter;
         }
 
-        public GrouveeDataFilterOutputter(IFilterTemplate<S> template) : base(template)
+        public GrouveeDataFilterOutputter(IFilterOutputterTemplate<S> template) : base(template)
         {
             outputter = template.Outputter;
         }
