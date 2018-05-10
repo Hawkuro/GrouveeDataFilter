@@ -10,20 +10,18 @@ namespace GrouveeDataFilter
 {
     public class GrouveeDataFilter<S>
     {
-        private Func<GrouveeGame, bool> filter;
-        private IComparer<GrouveeGame> comparer;
-        private Func<GrouveeGame, int, S> selector;
-        private Action<IEnumerable<S>> outputter;
+        public readonly Func<GrouveeGame, bool> filter;
+        public readonly IComparer<GrouveeGame> comparer;
+        public readonly Func<GrouveeGame, int, S> selector;
 
-        public GrouveeDataFilter(IFilterTemplate<S> template) : this(template.Filter, template.Comparer, template.Selector, template.Outputter) { }
+        public GrouveeDataFilter(IFilterTemplateStub<S> template) : this(template.Filter, template.Comparer, template.Selector) { }
 
         public GrouveeDataFilter(Func<GrouveeGame, bool> filter,
-            Comparison<GrouveeGame> comparer, Func<GrouveeGame, int, S> selector, Action<IEnumerable<S>> outputter)
+            Comparison<GrouveeGame> comparer, Func<GrouveeGame, int, S> selector)
         {
             this.filter = filter;
             this.comparer = Comparer<GrouveeGame>.Create(comparer);
             this.selector = selector;
-            this.outputter = outputter;
         }
 
         public static IEnumerable<GrouveeGame> ParseCSV(FileInfo inputFile)
@@ -42,6 +40,39 @@ namespace GrouveeDataFilter
             return gameList;
         }
 
+        public IEnumerable<S> GetGamesData(string fileUri)
+        {
+            return GetGamesData(new FileInfo(fileUri));
+        }
+
+        public IEnumerable<S> GetGamesData(FileInfo inputFile)
+        {
+            return GetGamesData(ParseCSV(inputFile));
+        }
+
+        public IEnumerable<S> GetGamesData(IEnumerable<GrouveeGame> games)
+        {
+            return games.Where(filter).OrderBy(g => g, comparer).Select(selector);
+        }
+
+    }
+
+    public class GrouveeDataFilterOutputter<S> : GrouveeDataFilter<S>
+    {
+        public readonly Action<IEnumerable<S>> outputter;
+
+        public GrouveeDataFilterOutputter(Func<GrouveeGame, bool> filter,
+            Comparison<GrouveeGame> comparer, Func<GrouveeGame, int, S> selector, Action<IEnumerable<S>> outputter) :
+            base(filter, comparer, selector)
+        {
+            this.outputter = outputter;
+        }
+
+        public GrouveeDataFilterOutputter(IFilterTemplate<S> template) : base(template)
+        {
+            outputter = template.Outputter;
+        }
+
         public void Run(string fileUri)
         {
             Run(new FileInfo(fileUri));
@@ -54,8 +85,7 @@ namespace GrouveeDataFilter
 
         public void Run(IEnumerable<GrouveeGame> games)
         {
-            outputter(games.Where(filter).OrderBy(g => g, comparer).Select(selector));
+            outputter(GetGamesData(games));
         }
-
     }
 }
