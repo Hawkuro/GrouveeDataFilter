@@ -27,7 +27,7 @@ namespace GrouveeDataFilter
             //    );
 
             // (\\""|..[^"])",
-            var gdf = new GrouveeDataFilter<string>(new IndexNameFilter());
+            var gdf = new GrouveeDataFilterOutputter<string>(new IndexNameFilter());
 
             gdf.Run(grouveeDataFileName);
 
