@@ -27,9 +27,9 @@ namespace GrouveeDataFilter
             //    );
 
             // (\\""|..[^"])",
-            var gdf = new GrouveeDataFilterOutputter<string>(new IndexNameFilter());
+            var gdf = new GrouveeDataFilter<FinishedGameFilterStub.FinishedGameFilterModel>(new FinishedGameFilterStub());
 
-            gdf.Run(grouveeDataFileName);
+            var games = gdf.GetGamesData(grouveeDataFileName);
 
         }
     }
