@@ -109,13 +109,13 @@ namespace GrouveeDataFilter
 
         }
 
-        private int? NullableIntParser(string intString)
+        private static int? NullableIntParser(string intString)
         {
             if (string.IsNullOrEmpty(intString)) return null;
             return int.Parse(intString);
         }
 
-        private DateTime? NullableDateTimeParser(string dateTimeString)
+        private static DateTime? NullableDateTimeParser(string dateTimeString)
         {
             if (string.IsNullOrEmpty(dateTimeString)) return null;
 
@@ -123,7 +123,7 @@ namespace GrouveeDataFilter
             return DateTime.TryParse(dateTimeString, out ret) ? ret : (DateTime?) null;
         }
 
-        private GrouveeGame.LevelOfCompletion LevelOfCompletionParser(string locString)
+        private static GrouveeGame.LevelOfCompletion LevelOfCompletionParser(string locString)
         {
             var dict = new Dictionary<string, GrouveeGame.LevelOfCompletion>
             {
@@ -135,52 +135,32 @@ namespace GrouveeDataFilter
             return dict.TryGetValue(locString, out ret) ? ret : GrouveeGame.LevelOfCompletion.None;
         }
 
-        private IEnumerable<GrouveeGame.DateData> DateDataParser(string dateDataString)
+        private static IEnumerable<GrouveeGame.DateData> DateDataParser(string dateDataString)
         {
-            var dateDatas = new List<GrouveeGame.DateData>();
-            if (string.IsNullOrEmpty(dateDataString)) return dateDatas;
+            if (string.IsNullOrEmpty(dateDataString)) return new List<GrouveeGame.DateData>();
 
-            var json = JArray.Parse(dateDataString);
-            foreach (var token in json)
-            {
-                var t = (JObject) token;
-                var dateData = new GrouveeGame.DateData
+            return from JObject t in JArray.Parse(dateDataString)
+                   select new GrouveeGame.DateData
                 {
                     date_started = NullableDateTimeParser(t["date_started"].Value<string>()),
                     date_finished = NullableDateTimeParser(t["date_finished"].Value<string>()),
-                    level_of_completion =
-                        LevelOfCompletionParser(t["level_of_completion"].Value<string>()),
+                    level_of_completion = LevelOfCompletionParser(t["level_of_completion"].Value<string>()),
                     seconds_played = t["seconds_played"].Value<int?>()
                 };
 
-                dateDatas.Add(dateData);
-            }
-
-            return dateDatas;
         }
 
-        private IEnumerable<GrouveeGame.Status> StatusParser(string statusString)
+        private static IEnumerable<GrouveeGame.Status> StatusParser(string statusString)
         {
-            var statuses = new List<GrouveeGame.Status>();
-            if (string.IsNullOrEmpty(statusString)) return statuses;
+            if (string.IsNullOrEmpty(statusString)) return new List<GrouveeGame.Status>();
 
-            var json = JArray.Parse(statusString);
-
-            foreach (var token in json)
-            {
-                var t = (JObject) token;
-
-                var status = new GrouveeGame.Status
+            return from JObject t in JArray.Parse(statusString)
+                   select new GrouveeGame.Status
                 {
                     status = t["status"].Value<string>(),
                     date = DateTime.Parse(t["date"].Value<string>()),
                     url = new Uri(t["url"].Value<string>())
                 };
-
-                statuses.Add(status);
-            }
-
-            return statuses;
         }
     }
 }
