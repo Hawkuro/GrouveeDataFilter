@@ -76,7 +76,7 @@ namespace GrouveeDataFilter
 
                 // I guess you could account for empty strings here, but I don't think they're possible
                 // Replace double double quotes with single double quotes for Json parsing
-                nextElement = tail.Substring(1, nextComma - 2); //.Replace("\"\"","\"");
+                nextElement = tail.Substring(1, nextComma - 2).Replace("\"\"","\"");
             } else
             {
                 nextComma = tail.IndexOf(',');
