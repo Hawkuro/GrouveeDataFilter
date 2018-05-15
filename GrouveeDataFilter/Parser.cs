@@ -107,7 +107,7 @@ namespace GrouveeDataFilter
                 var NameUrl = new GrouveeGame.NameUrl
                 {
                     name = property,
-                    url = new Uri(((JObject) json.Property(property).Value).Property("url").Value.ToString())
+                    url = new Uri(json[property]["url"].Value<string>())
                 };
 
                 NameUrls.Add(NameUrl);
@@ -153,11 +153,11 @@ namespace GrouveeDataFilter
                 var t = (JObject) token;
                 var dateData = new GrouveeGame.DateData
                 {
-                    date_started = NullableDateTimeParser(t.Property("date_started").Value.ToString()),
-                    date_finished = NullableDateTimeParser(t.Property("date_finished").Value.ToString()),
+                    date_started = NullableDateTimeParser(t["date_started"].Value<string>()),
+                    date_finished = NullableDateTimeParser(t["date_finished"].Value<string>()),
                     level_of_completion =
-                        LevelOfCompletionParser(t.Property("level_of_completion").Value.ToString()),
-                    seconds_played = NullableIntParser(t.Property("seconds_played").Value.ToString())
+                        LevelOfCompletionParser(t["level_of_completion"].Value<string>()),
+                    seconds_played = t["seconds_played"].Value<int?>()
                 };
 
                 dateDatas.Add(dateData);
@@ -179,9 +179,9 @@ namespace GrouveeDataFilter
 
                 var status = new GrouveeGame.Status
                 {
-                    status = t.Property("status").Value.ToString(),
-                    date = DateTime.Parse(t.Property("date").Value.ToString()),
-                    url = new Uri(t.Property("url").Value.ToString())
+                    status = t["status"].Value<string>(),
+                    date = DateTime.Parse(t["date"].Value<string>()),
+                    url = new Uri(t["url"].Value<string>())
                 };
 
                 statuses.Add(status);
