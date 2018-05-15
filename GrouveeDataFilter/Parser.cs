@@ -98,22 +98,15 @@ namespace GrouveeDataFilter
 
         private IEnumerable<GrouveeGame.NameUrl> NameUrlParser(string nameUrlString)
         {
-            var NameUrls = new List<GrouveeGame.NameUrl>();
-            if (string.IsNullOrEmpty(nameUrlString)) return NameUrls;
+            if (string.IsNullOrEmpty(nameUrlString)) return new List<GrouveeGame.NameUrl>();
 
-            var json = JObject.Parse(nameUrlString);
-            foreach (var property in json.Properties().Select(p=>p.Name))
-            {
-                var NameUrl = new GrouveeGame.NameUrl
+            return JObject.Parse(nameUrlString).Properties()
+                .Select(property => new GrouveeGame.NameUrl
                 {
-                    name = property,
-                    url = new Uri(json[property]["url"].Value<string>())
-                };
+                    name = property.Name,
+                    url = new Uri(property.Value["url"].Value<string>())
+                });
 
-                NameUrls.Add(NameUrl);
-            }
-
-            return NameUrls;
         }
 
         private int? NullableIntParser(string intString)
