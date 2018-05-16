@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,26 +13,19 @@ namespace GrouveeDataFilter
     public class Program
     {
 
+        public static string OutputFileName(FileInfo inputFile)
+        {
+            return $"{inputFile.DirectoryName}\\{inputFile.Name.Substring(0,inputFile.Name.Length - inputFile.Extension.Length)}-FinishedGameFilterOutput.csv";
+        }
+
         public static void Main(string[] args)
         {
+            var grouveeDataFile = new FileInfo(args[0]);
 
-            //var grouveeDataFileName = args[0];
-            var grouveeDataFileName = "C:\\Users\\haukuroskar\\Downloads\\Hawkuro_26904_grouvee_export.csv";
+            var gdf = new GrouveeDataFilterOutputter<FinishedGameFilterStub.FinishedGameFilterModel>(
+                new FinishedGameFilter(OutputFileName(grouveeDataFile)));
 
-            // TODO: Write filter, comparer, selector, outputter
-            //var gdf = new GrouveeDataFilter<string>(
-            //    g => true,
-            //    (g1,g2)=>g1.name.CompareTo(g2.name),
-            //    (g,i) => i+" "+g.name,
-            //    gs => gs.ForEach(g => Console.WriteLine(g))
-            //    );
-
-            // (\\""|..[^"])",
-            var gdf = new GrouveeDataFilterOutputter<FinishedGameFilterStub.FinishedGameFilterModel>(new FinishedGameFilter());
-
-            gdf.Run(grouveeDataFileName);
-            //var games = gdf.GetGamesData(grouveeDataFileName);
-
+            gdf.Run(grouveeDataFile);
         }
     }
 }

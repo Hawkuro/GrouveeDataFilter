@@ -11,6 +11,13 @@ namespace GrouveeDataFilter.Filter_Templates
 {
     public class FinishedGameFilterStub : IFilterTemplate<FinishedGameFilterStub.FinishedGameFilterModel>
     {
+        public readonly string outputFileName;
+
+        public FinishedGameFilterStub(string outputFileName)
+        {
+            this.outputFileName = outputFileName;
+        }
+
         [DelimitedRecord(","), IgnoreFirst(1)]
         public class FinishedGameFilterModel
         {
@@ -67,13 +74,15 @@ namespace GrouveeDataFilter.Filter_Templates
     public class FinishedGameFilter : FinishedGameFilterStub,
         IFilterOutputterTemplate<FinishedGameFilterStub.FinishedGameFilterModel>
     {
+        public FinishedGameFilter(string outputFileName) : base(outputFileName) { }
+
         public void Outputter(IEnumerable<FinishedGameFilterModel> games)
         {
             var engine = new FileHelperEngine<FinishedGameFilterModel>
             {
                 HeaderText = typeof(FinishedGameFilterModel).GetCsvHeader()
             };
-            engine.WriteFile(@"C:\Users\haukuroskar\Documents\Visual Studio 2015\Projects\Test.csv", games);
+            engine.WriteFile(outputFileName, games);
         }
     }
 }
