@@ -10,6 +10,12 @@ namespace GrouveeDataFilter.Utils
 {
     public static class Tools
     {
+        /// <summary>
+        /// Helper function to call foreach in a linq style
+        /// </summary>
+        /// <typeparam name="T">The type of this IEnumerable</typeparam>
+        /// <param name="source">this, an IEnumerable</param>
+        /// <param name="action">The action to be called on each element in the IEnumerable</param>
         public static void ForEach<T>(
             this IEnumerable<T> source,
             Action<T> action)
@@ -19,7 +25,7 @@ namespace GrouveeDataFilter.Utils
         }
     }
 
-    // see http://stackoverflow.com/questions/3975741/column-headers-in-csv-using-filehelpers-library/8258420#8258420
+    // Copied from code presented as a solution on http://stackoverflow.com/questions/3975741/column-headers-in-csv-using-filehelpers-library/8258420#8258420 
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public class FieldTitleAttribute : Attribute
