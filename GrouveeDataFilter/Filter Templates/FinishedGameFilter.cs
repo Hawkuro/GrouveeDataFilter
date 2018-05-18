@@ -9,11 +9,11 @@ using GrouveeDataFilter.Utils;
 
 namespace GrouveeDataFilter.Filter_Templates
 {
-    public class FinishedGameFilterStub : IFilterTemplate<FinishedGameFilterStub.FinishedGameFilterModel>
+    public class FinishedGameFilter : IFilterTemplate<FinishedGameFilter.FinishedGameFilterModel>
     {
         public readonly string outputFileName;
 
-        public FinishedGameFilterStub(string outputFileName)
+        public FinishedGameFilter(string outputFileName)
         {
             this.outputFileName = outputFileName;
         }
@@ -71,10 +71,10 @@ namespace GrouveeDataFilter.Filter_Templates
         }
     }
 
-    public class FinishedGameFilter : FinishedGameFilterStub,
-        IFilterOutputterTemplate<FinishedGameFilterStub.FinishedGameFilterModel>
+    public class FinishedGameFilterOutputter : FinishedGameFilter,
+        IFilterOutputterTemplate<FinishedGameFilter.FinishedGameFilterModel>
     {
-        public FinishedGameFilter(string outputFileName) : base(outputFileName) { }
+        public FinishedGameFilterOutputter(string outputFileName) : base(outputFileName) { }
 
         public void Outputter(IEnumerable<FinishedGameFilterModel> games)
         {

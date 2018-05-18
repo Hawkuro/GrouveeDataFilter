@@ -64,6 +64,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\FileHelpers.Analyzer.1.1.0.0\analyzers\dotnet\cs\FileHelpers.Analyzer.dll" />

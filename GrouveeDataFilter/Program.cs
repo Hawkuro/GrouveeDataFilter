@@ -22,8 +22,8 @@ namespace GrouveeDataFilter
         {
             var grouveeDataFile = new FileInfo(args[0]);
 
-            var gdf = new GrouveeDataFilterOutputter<FinishedGameFilterStub.FinishedGameFilterModel>(
-                new FinishedGameFilter(OutputFileName(grouveeDataFile)));
+            var gdf = new GrouveeDataFilterOutputter<FinishedGameFilter.FinishedGameFilterModel>(
+                new FinishedGameFilterOutputter(OutputFileName(grouveeDataFile)));
 
             gdf.Run(grouveeDataFile);
         }
