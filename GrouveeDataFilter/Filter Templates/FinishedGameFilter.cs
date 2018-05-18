@@ -78,11 +78,8 @@ namespace GrouveeDataFilter.Filter_Templates
 
         public void Outputter(IEnumerable<FinishedGameFilterModel> games)
         {
-            var engine = new FileHelperEngine<FinishedGameFilterModel>
-            {
-                HeaderText = typeof(FinishedGameFilterModel).GetCsvHeader()
-            };
-            engine.WriteFile(outputFileName, games);
+            Tools.GetFileHelperEngine<FinishedGameFilterModel>().WriteFile(outputFileName, games);
         }
+
     }
 }

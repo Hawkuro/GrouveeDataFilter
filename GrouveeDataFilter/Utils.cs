@@ -23,6 +23,19 @@ namespace GrouveeDataFilter.Utils
             foreach (T element in source)
                 action(element);
         }
+
+        /// <summary>
+        /// Get a FileHelperEngine with the header generated from T's annotations
+        /// </summary>
+        /// <typeparam name="T">Class type annotated with FileHelpers annotations FieldAttribute and FieldOrder</typeparam>
+        /// <returns>A FileHelperEngine for the type that will output a correct header</returns>
+        public static FileHelperEngine<T> GetFileHelperEngine<T>() where T : class
+        {
+            return new FileHelperEngine<T>
+            {
+                HeaderText = typeof(T).GetCsvHeader()
+            };
+        }
     }
 
     // Copied from code presented as a solution on http://stackoverflow.com/questions/3975741/column-headers-in-csv-using-filehelpers-library/8258420#8258420 
