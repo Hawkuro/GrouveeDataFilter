@@ -45,7 +45,7 @@ namespace GrouveeDataFilter
             // and '\""' inside json strings) in NextElement()
             game.id = int.Parse(NextElement());
             game.name = NextElement();
-            game.shelves = NameUrlParser(NextElement());
+            game.shelves = ShelfParser(NextElement());
             game.platforms = NameUrlParser(NextElement());
             game.rating = NullableIntParser(NextElement());
             game.review = NextElement(); // For the love of all that is holy don't end these in '"', that case is a nightmare to handle, but feel free to try it if you're feeling brave. 
@@ -153,6 +153,21 @@ namespace GrouveeDataFilter
                 {
                     name = property.Name,
                     url = new Uri(property.Value["url"].Value<string>())
+                });
+
+        }
+
+        private IEnumerable<GrouveeGame.Shelf> ShelfParser(string nameUrlString)
+        {
+            if (string.IsNullOrEmpty(nameUrlString)) return new List<GrouveeGame.Shelf>();
+
+            return JObject.Parse(nameUrlString).Properties()
+                .Select(property => new GrouveeGame.Shelf
+                {
+                    name = property.Name,
+                    url = new Uri(property.Value["url"].Value<string>()),
+                    date_added = property.Value["date_added"].Value<DateTime>(),
+                    order = property.Value["order"].Value<int>()
                 });
 
         }
