@@ -12,7 +12,7 @@ namespace GrouveeDataFilter
     /// An object that parses a Grouvee export csv, filters it,
     /// sorts it and returns the results of a selection
     /// </summary>
-    /// <typeparam name="S">The type of  returned data</typeparam>
+    /// <typeparam name="S">The type of returned data</typeparam>
     public class GrouveeDataFilter<S>
     {
         // Names speak for themselves
