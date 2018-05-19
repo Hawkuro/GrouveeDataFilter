@@ -25,6 +25,14 @@ namespace GrouveeDataFilter.Models
             HundredPercent
         }
 
+        public readonly Dictionary<string, LevelOfCompletion> LevelOfCompletionConverter =
+            new Dictionary<string, LevelOfCompletion>
+            {
+                {"Main Story", LevelOfCompletion.MainStory},
+                {"Main Story + Extras", LevelOfCompletion.MainStoryExtras},
+                {"100% Completion", LevelOfCompletion.HundredPercent}
+            };
+
         public class DateData
         {
             public DateTime? date_finished;

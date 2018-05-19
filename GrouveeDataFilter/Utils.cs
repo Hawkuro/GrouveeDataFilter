@@ -24,6 +24,13 @@ namespace GrouveeDataFilter.Utils
                 action(element);
         }
 
+        // From http://www.dreamincode.net/forums/topic/78080-two-way-dictionary/
+        public static TKey GetKeyByValue<TKey, TValue>(this Dictionary<TKey, TValue> dict, TValue value)
+        {
+            //this will return either the key, or a default value for TKey
+            return dict.SingleOrDefault(x => x.Value.Equals(value)).Key;
+        }
+
         /// <summary>
         /// Get a FileHelperEngine with the header generated from T's annotations
         /// </summary>
