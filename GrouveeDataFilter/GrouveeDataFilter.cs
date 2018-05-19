@@ -34,7 +34,7 @@ namespace GrouveeDataFilter
 
                 while (!fileContent.EndOfStream)
                 {
-                    gameList.Add(new Parser(fileContent.ReadLine()).ParseLine());
+                    gameList.Add(new GrouveeLineParser(fileContent.ReadLine()).ParseLine());
                 }
             }
             return gameList;

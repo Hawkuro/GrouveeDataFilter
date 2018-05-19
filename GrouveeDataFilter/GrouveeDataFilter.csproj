@@ -56,7 +56,7 @@
     <Compile Include="GrouveeDataFilter.cs" />
     <Compile Include="IFilterOutputterTemplate.cs" />
     <Compile Include="Models.cs" />
-    <Compile Include="Parser.cs" />
+    <Compile Include="GrouveeLineParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils.cs" />
