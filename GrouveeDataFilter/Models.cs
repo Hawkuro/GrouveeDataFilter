@@ -5,11 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FileHelpers;
+using GrouveeDataFilter.Utils;
 
 namespace GrouveeDataFilter.Models
 {
     public class GrouveeGame
     {
+        /// <summary>
+        /// A status update and its metadata
+        /// </summary>
         public class Status
         {
             public string status;
@@ -17,6 +21,9 @@ namespace GrouveeDataFilter.Models
             public Uri url;
         }
 
+        /// <summary>
+        /// An enurable enumrating the Level of Completion of a given game
+        /// </summary>
         public enum LevelOfCompletion
         {
             None,
@@ -25,13 +32,32 @@ namespace GrouveeDataFilter.Models
             HundredPercent
         }
 
-        public static readonly Dictionary<string, LevelOfCompletion> LevelOfCompletionConverter =
+        /// <summary>
+        /// Maps Level of completion as a string to the enum, not including None
+        /// </summary>
+        private static readonly Dictionary<string, LevelOfCompletion> LevelOfCompletionConverter =
             new Dictionary<string, LevelOfCompletion>
             {
                 {"Main Story", LevelOfCompletion.MainStory},
                 {"Main Story + Extras", LevelOfCompletion.MainStoryExtras},
                 {"100% Completion", LevelOfCompletion.HundredPercent}
             };
+
+        public static string ConvertLevelOfCompletion(LevelOfCompletion loc)
+        {
+            return LevelOfCompletionConverter.GetKeyByValue(loc);
+        }
+
+        /// <summary>
+        /// Get a LevelOfCompletion enum based on the level of completion string
+        /// </summary>
+        /// <param name="locString">The string to parse</param>
+        /// <returns>The level of completion, as an enum. None if unknown.</returns>
+        public static LevelOfCompletion ConvertLevelOfCompletion(string loc)
+        {
+            LevelOfCompletion ret;
+            return LevelOfCompletionConverter.TryGetValue(loc, out ret) ? ret : LevelOfCompletion.None;
+        }
 
         public class DateData
         {

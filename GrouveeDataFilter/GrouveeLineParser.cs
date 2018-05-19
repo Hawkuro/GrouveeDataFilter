@@ -182,17 +182,6 @@ namespace GrouveeDataFilter
         }
 
         /// <summary>
-        /// Get a LevelOfCompletion enum based on the level of completion string
-        /// </summary>
-        /// <param name="locString">The string to parse</param>
-        /// <returns>The level of completion, as an enum. None if unknown.</returns>
-        private static GrouveeGame.LevelOfCompletion LevelOfCompletionParser(string locString)
-        {
-            GrouveeGame.LevelOfCompletion ret;
-            return GrouveeGame.LevelOfCompletionConverter.TryGetValue(locString, out ret) ? ret : GrouveeGame.LevelOfCompletion.None;
-        }
-
-        /// <summary>
         /// Parse an array of date information
         /// </summary>
         /// <param name="dateDataString">The array as a json string</param>
@@ -206,7 +195,7 @@ namespace GrouveeDataFilter
                 {
                     date_started = NullableDateTimeParser(t["date_started"].Value<string>()),
                     date_finished = NullableDateTimeParser(t["date_finished"].Value<string>()),
-                    level_of_completion = LevelOfCompletionParser(t["level_of_completion"].Value<string>()),
+                    level_of_completion = GrouveeGame.ConvertLevelOfCompletion(t["level_of_completion"].Value<string>()),
                     seconds_played = t["seconds_played"].Value<int?>()
                 };
 
