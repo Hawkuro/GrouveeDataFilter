@@ -25,7 +25,7 @@ namespace GrouveeDataFilter.Models
             HundredPercent
         }
 
-        public readonly Dictionary<string, LevelOfCompletion> LevelOfCompletionConverter =
+        public static readonly Dictionary<string, LevelOfCompletion> LevelOfCompletionConverter =
             new Dictionary<string, LevelOfCompletion>
             {
                 {"Main Story", LevelOfCompletion.MainStory},
