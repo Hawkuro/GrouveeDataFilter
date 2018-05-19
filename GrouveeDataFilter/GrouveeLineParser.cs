@@ -143,8 +143,8 @@ namespace GrouveeDataFilter
         /// {"Name1": {"url": "http://example1.com"}, "Name2": {"url": "http://example2.com"}}
         /// </summary>
         /// <param name="nameUrlString">The element as a string</param>
-        /// <returns>A NameUrl object with the data from the string</returns>
-        private IEnumerable<GrouveeGame.NameUrl> NameUrlParser(string nameUrlString)
+        /// <returns>A list of NameUrl objects with the data from the string</returns>
+        private static IEnumerable<GrouveeGame.NameUrl> NameUrlParser(string nameUrlString)
         {
             if (string.IsNullOrEmpty(nameUrlString)) return new List<GrouveeGame.NameUrl>();
 
@@ -157,11 +157,16 @@ namespace GrouveeDataFilter
 
         }
 
-        private IEnumerable<GrouveeGame.Shelf> ShelfParser(string nameUrlString)
+        /// <summary>
+        /// Parses shelf data, the look like NameUrl objects with more data in the inner objects
+        /// </summary>
+        /// <param name="shelfString">The shelf data as a string</param>
+        /// <returns>A list of Shelf objects with the data from the string</returns>
+        private static IEnumerable<GrouveeGame.Shelf> ShelfParser(string shelfString)
         {
-            if (string.IsNullOrEmpty(nameUrlString)) return new List<GrouveeGame.Shelf>();
+            if (string.IsNullOrEmpty(shelfString)) return new List<GrouveeGame.Shelf>();
 
-            return JObject.Parse(nameUrlString).Properties()
+            return JObject.Parse(shelfString).Properties()
                 .Select(property => new GrouveeGame.Shelf
                 {
                     name = property.Name,
