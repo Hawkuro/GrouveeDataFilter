@@ -28,7 +28,7 @@ In the Demo folder you will find an excel file. To use it:
 10. On the second screen, select only comma
 11. Click finish
 12. Right click the bottom axis and set dates that make sense
-13. You may have to redo the data labels as well, they seem to get messed up
+13. You may have to redo the data labels as well, they seem to get messed up, in which case under Label Options -> Label contains choose Value from cells and type in `=Games!Name` as the range.
 14. Congratulations, you now have a timeline of all your finished games
 
 ## Creating your own
