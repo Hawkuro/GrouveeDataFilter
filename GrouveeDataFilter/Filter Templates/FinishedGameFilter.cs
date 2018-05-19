@@ -11,13 +11,6 @@ namespace GrouveeDataFilter.Filter_Templates
 {
     public class FinishedGameFilter : IFilterTemplate<FinishedGameFilter.FinishedGameFilterModel>
     {
-        public readonly string outputFileName;
-
-        public FinishedGameFilter(string outputFileName)
-        {
-            this.outputFileName = outputFileName;
-        }
-
         [DelimitedRecord(","), IgnoreFirst(1)]
         public class FinishedGameFilterModel
         {
@@ -37,12 +30,12 @@ namespace GrouveeDataFilter.Filter_Templates
         }
 
         public bool Filter(GrouveeGame game)
-        {
+        { // Takes only games that have a finish date
             return game.dates.FirstOrDefault(d => d.date_finished != null) != null;
         }
 
         public int Comparer(GrouveeGame x, GrouveeGame y)
-        {
+        { // Compares by finish date
             return x.dates.First(d => d.date_finished != null).date_finished.Value
                 .CompareTo(y.dates.First(d => d.date_finished != null).date_finished.Value);
         }
@@ -74,10 +67,16 @@ namespace GrouveeDataFilter.Filter_Templates
     public class FinishedGameFilterOutputter : FinishedGameFilter,
         IFilterOutputterTemplate<FinishedGameFilter.FinishedGameFilterModel>
     {
-        public FinishedGameFilterOutputter(string outputFileName) : base(outputFileName) { }
+        // The file to save the output to
+        public readonly string outputFileName;
+
+        public FinishedGameFilterOutputter(string outputFileName)
+        {
+            this.outputFileName = outputFileName;
+        }
 
         public void Outputter(IEnumerable<FinishedGameFilterModel> games)
-        {
+        { // Writes to csv file
             Tools.GetFileHelperEngine<FinishedGameFilterModel>().WriteFile(outputFileName, games);
         }
 
