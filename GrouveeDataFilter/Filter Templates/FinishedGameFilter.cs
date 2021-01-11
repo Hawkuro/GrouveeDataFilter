@@ -15,15 +15,18 @@ namespace GrouveeDataFilter.Filter_Templates
             [FieldOrder(1), FieldTitle("Name")]
             public string name;
             [FieldConverter(ConverterKind.Date, "yyyy-MM-dd")]
-            [FieldOrder(2), FieldTitle("Finished date")]
-            public DateTime finished_date;
-            [FieldOrder(3), FieldTitle("Games Completed")]
+            [FieldOrder(2), FieldTitle("Started date")]
+            public DateTime? started_date;
+            [FieldConverter(ConverterKind.Date, "yyyy-MM-dd")]
+            [FieldOrder(3), FieldTitle("Finished date")]
+            public DateTime? finished_date;
+            [FieldOrder(4), FieldTitle("Games Completed")]
             public int index;
-            [FieldOrder(4), FieldTitle("Main Story")]
+            [FieldOrder(5), FieldTitle("Main Story")]
             public int? MainStory;
-            [FieldOrder(5), FieldTitle("Main Story + Extras")]
+            [FieldOrder(6), FieldTitle("Main Story + Extras")]
             public int? MainStoryExtras;
-            [FieldOrder(6), FieldTitle("100% Completion")]
+            [FieldOrder(7), FieldTitle("100% Completion")]
             public int? HundredPercent;
         }
 
@@ -33,7 +36,7 @@ namespace GrouveeDataFilter.Filter_Templates
         }
 
         public int Comparer(GrouveeGame x, GrouveeGame y)
-        { // Compares by finish date
+        { // Compares by start date
             return x.dates.First(d => d.date_finished != null).date_finished.Value
                 .CompareTo(y.dates.First(d => d.date_finished != null).date_finished.Value);
         }
@@ -45,6 +48,7 @@ namespace GrouveeDataFilter.Filter_Templates
             var model = new FinishedGameFilterModel
             {
                 name = game.name,
+                started_date = finishedDateObject.date_started.Value,
                 finished_date = finishedDateObject.date_finished.Value,
                 index = index + 1
             };

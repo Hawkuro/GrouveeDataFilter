@@ -22,7 +22,7 @@ namespace GrouveeDataFilter
         /// Creates a GrouveeDataFilter based on a template
         /// </summary>
         /// <param name="template">An instance fof the template type</param>
-        public GrouveeDataFilter(IFilterTemplate<S> template) : this(template.Filter, template.Comparer, template.Selector) { }
+        public GrouveeDataFilter(IFilterTemplate<S> template) : this(template.Filter, template.Comparer, (game, index) => template.Selector(game, index)) { }
 
         /// <summary>
         /// Creates a GrouveeDataFilter using delegates

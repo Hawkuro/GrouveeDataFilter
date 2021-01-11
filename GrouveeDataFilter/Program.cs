@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using GrouveeDataFilter.Filter_Templates;
 
 namespace GrouveeDataFilter
@@ -13,7 +14,7 @@ namespace GrouveeDataFilter
         /// <returns>A string file name as described</returns>
         public static string OutputFileName(FileInfo inputFile)
         {
-            return $"{inputFile.DirectoryName}\\{inputFile.Name.Substring(0,inputFile.Name.Length - inputFile.Extension.Length)}-FinishedGameFilterOutput.csv";
+            return $"{inputFile.DirectoryName}\\{inputFile.Name.Substring(0,inputFile.Name.Length - inputFile.Extension.Length)}-2020FilterOutput.csv";
         }
 
         /// <summary>
@@ -32,8 +33,8 @@ namespace GrouveeDataFilter
                 var grouveeDataFile = new FileInfo(fileName);
 
                 // A GrouveeDataFilterOutputter based on the FinishedGameFilter class
-                var gdfo = new GrouveeDataFilterOutputter<FinishedGameFilter.FinishedGameFilterModel>(
-                    new FinishedGameFilterOutputter(OutputFileName(grouveeDataFile)));
+                var gdfo = new GrouveeDataFilterOutputter<IEnumerable<YearFilter.YearFilterModel>>(
+                    new YearFilterOutputter(2020,OutputFileName(grouveeDataFile)));
 
                 // Parse the data in the file; filter, sort & map it, and finally output it to
                 // a new file.

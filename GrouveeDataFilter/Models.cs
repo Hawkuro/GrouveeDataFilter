@@ -56,7 +56,7 @@ namespace GrouveeDataFilter.Models
         public static LevelOfCompletion ConvertLevelOfCompletion(string loc)
         {
             LevelOfCompletion ret;
-            return LevelOfCompletionConverter.TryGetValue(loc, out ret) ? ret : LevelOfCompletion.None;
+            return LevelOfCompletionConverter.TryGetValue(loc??"", out ret) ? ret : LevelOfCompletion.None;
         }
 
         /// <summary>

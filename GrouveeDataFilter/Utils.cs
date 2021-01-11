@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FileHelpers;
+using HtmlAgilityPack;
 
 namespace GrouveeDataFilter.Utils
 {
@@ -40,6 +41,11 @@ namespace GrouveeDataFilter.Utils
             {
                 HeaderText = typeof(T).GetCsvHeader()
             };
+        }
+
+        internal static string getImageURI(Uri gameUri)
+        {
+            return new HtmlWeb().Load(gameUri).DocumentNode.SelectNodes("//div[contains(@class, 'game-image')]/div/img").First().Attributes["src"].Value;
         }
     }
 
